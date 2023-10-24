@@ -1,0 +1,29 @@
+{% extends "header.html" %}
+{% block title %}
+Menu items
+{% endblock %}
+
+{% block content %}
+<section class="bg-dark text-light p-5">
+    <div class="container-fluid">
+        
+        <h3 class="card-title">{{ item.name }}</h3>
+    
+    <div class="card bg-dark text-light" style="width: 15rem;">
+        <img src="{{item.img.url}}" class="card-img-top" style="height:12vw; object-fit:cover;" alt="No image"/>
+        <div class="card-body">
+            
+            <p class="card-text">{{item.description}}</p>
+            <h4>&euro;{{item.price}}</h4>
+            <h3>{{item.ratings}}</h3>
+            <h3>&euro;{{item.discount}}%</h3>
+            <h3>Amount payable =&euro;{{selling_price}}%</h3>
+            {% if not is_buy %}
+            <a href="#link" class="btn btn-info" role="button">Place Order</a>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

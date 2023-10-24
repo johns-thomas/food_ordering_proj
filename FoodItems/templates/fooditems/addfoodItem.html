@@ -1,6 +1,52 @@
-<form  method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-secondary">Save</button>
+{% extends "header.html" %}
+{% block title %}
+Menu
+{% endblock %}
 
-</form>
+{% block content %}
+
+<section class="bg-dark text-light p-5 text-center">
+    <div class="container">
+        <h1>Add your <span style="color: beige;">dishes here </span></h1>
+        <img class="img-fluid" src="/static/FrontPIc.jpeg"  alt="No image"/>
+    </div>
+
+
+<div class="d-flex align-items-center justify-content-center vh-100 " >
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}" class="input-label">Item name:</label>
+            {{ form.name }}
+        </div>
+        <div class="mb-3">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}" class="form-label"> Description:</label>
+            {{ form.description }}
+        </div>
+        <div class="mb-3">
+            {{ form.price.errors }}
+            <label for="{{ form.price.id_for_label }}" class="form-label">Price:</label>
+            {{ form.price }}
+        </div>
+        <div class="mb-3">
+            {{ form.discount.errors }}
+            <label for="{{ form.discount.id_for_label }}" class="form-label">Discount</label>
+            {{ form.discount }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.img.errors }}
+            <label for="{{ form.img.id_for_label }}" class="form-label">Image</label>
+            {{ form.img }}
+        </div>
+        <div class="d-flex align-items-center justify-content-center">
+        <button type="submit" class="save btn btn-primary">Save</button>
+    </div>
+    </form>
+</div>
+</section>
+{% endblock %}
