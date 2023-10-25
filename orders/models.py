@@ -1,12 +1,12 @@
 from django.db import models
 from FoodItems.models import FoodItem
-from users.models import User
+from django.contrib.auth.models import User
 
 class Orders(models.Model):
-    daddress = models.CharField(max_length=150)
-    eircode= models.CharField(max_length=150)
-    item_id=models.ForeignKey(FoodItem)
-    user_id=models.ForeignKey(User)
+    
+    item=models.ForeignKey(FoodItem, on_delete=models.PROTECT)
+    user = models.ForeignKey(User,on_delete=models.PROTECT)
     order_placed_at=models.DateTimeField()
+    status=models.CharField(max_length=20,default='PENDING')
 
     

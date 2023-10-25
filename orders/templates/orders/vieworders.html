@@ -1,0 +1,26 @@
+<div class="container-fluid bg-dark">
+    {% if orders %}
+    <div class="row pt-4">
+        {% for order in orders %}
+
+        <div class="col-sm-12 col-md-5 col-lg-3 pt-4 m-4">
+            <div class="card bg-dark text-light" style="width: 15rem;">
+                <img src="media/{{order.item.img}}" class="card-img-top" style="height:12vw; object-fit:cover;"
+                    alt="No image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.item.name }}</h5>
+                    <p class="card-text">{{order.item.description}}</p>
+                    <h4>{{order.item.price}}</h4>
+                    <h4>Order Status: {{order.status}}</h4>
+                </div>
+            </div>
+        </div>
+        <!---- {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div><div class="row row-cols-3 mt-5">
+            {% endif %}--->
+        {% endfor %}
+        {% else %}
+        <p>There are no movies recorded.</p>
+    </div>
+    {% endif %}
+</div>

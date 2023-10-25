@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
-    'users.app.UsersConfig',
+    'users.apps.UsersConfig',
     'FoodItems.apps.FoodItemsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -133,3 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_REDIRECT_URL='/users/login_home/'

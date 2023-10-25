@@ -3,6 +3,8 @@ from django.http import Http404
 
 from .models import FoodItem
 from .forms import AddFoodItemForm
+from users.models import Profile
+from users.forms import ProfileCreationForm
 
 def home_page(request):
     items = FoodItem.objects.order_by('ratings')[:15]
@@ -23,19 +25,20 @@ def add_food_item(request):
 def view_item(request,item_id):
     try:
         item = FoodItem.objects.get(pk=item_id)
-        selling_price=item.price-item.discount
     except FoodItem.DoesNotExist:
         raise Http404("Item  not found")
-    return render(request, 'fooditems/viewitem.html', {'item': item,'is_buy':False,'selling_price':selling_price})
+    return render(request, 'fooditems/viewitem.html', {'item': item,'is_buy':False})
 
-def checkout_item(request,item_id):
+def buy_item(request,item_id):
     try:
         item = FoodItem.objects.get(pk=item_id)
+        profile=Profile.objects.filter(user=request.user)
+        form = ProfileCreationForm(instance=profile)
         if(item.is_available()):
-            context={'item': item,'is_buy':True}
+            context={'item': item,'is_buy':True, 'form':form}
         else:
             raise FoodItem.DoesNotExist
     except FoodItem.DoesNotExist:
         raise Http404("Item  not found")
-    return render(request, 'orders/vieworder.html', context)
+    return render(request, 'fooditems/viewitem.html', context)
     
