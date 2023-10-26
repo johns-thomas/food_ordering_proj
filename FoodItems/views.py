@@ -27,18 +27,7 @@ def view_item(request,item_id):
         item = FoodItem.objects.get(pk=item_id)
     except FoodItem.DoesNotExist:
         raise Http404("Item  not found")
-    return render(request, 'fooditems/viewitem.html', {'item': item,'is_buy':False})
+    return render(request, 'fooditems/viewitem.html', {'item': item,'is_buy':True})
 
-def buy_item(request,item_id):
-    try:
-        item = FoodItem.objects.get(pk=item_id)
-        profile=Profile.objects.filter(user=request.user)
-        form = ProfileCreationForm(instance=profile)
-        if(item.is_available()):
-            context={'item': item,'is_buy':True, 'form':form}
-        else:
-            raise FoodItem.DoesNotExist
-    except FoodItem.DoesNotExist:
-        raise Http404("Item  not found")
-    return render(request, 'fooditems/viewitem.html', context)
+
     

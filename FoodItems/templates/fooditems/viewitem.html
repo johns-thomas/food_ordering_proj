@@ -19,25 +19,10 @@ Menu items
             <h3>&euro;{{item.discount}}%</h3>
             <h3>Amount payable =&euro;{{item.get_selling_price}}%</h3>
             {% if request.user.profile.is_customer %}
-            {% if not is_buy %}
-            <a href="buyitem/{{ item.id }}/" class="btn btn-info" role="button">Buy</a>
+            {% if is_buy %}
+            <a href="{% url 'orders:place_order' item_id=item.id %}" class="btn btn-info" role="button">Buy</a>
             {% else %}
-            <form method="post" >
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-                <div class="form-group">
-                    {{ form.daddress.errors }}
-                    <label for="{{ form.daddress.id_for_label }}">Delivery Address</label>
-                    {{ form.daddress }}
-                </div>
-                <div class="form-group">
-                    {{ form.phone.errors }}
-                    <label for="{{ form.phone.id_for_label }}">Mobile</label>
-                    {{ form.phone}}
-                </div>
-                <input type="hidden" id="item_id" name="item_id" value="{{item.id}}">
-                <button type="submit" class="btn btn-primary">Place Order</button>
-              </form>
+            
             {% endif %}
             {% else %}
             <a href="#link" class="btn btn-info" role="button">Edit item</a>

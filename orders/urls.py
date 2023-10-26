@@ -5,5 +5,5 @@ app_name = 'orders'
 
 
 urlpatterns = [
-path('place_order/', views.create_order, name='place_order'),
+path('/buyitem/<int:item_id>/', views.create_order, name='place_order'),
 ]

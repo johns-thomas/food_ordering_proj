@@ -1,23 +1,19 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from users.forms import ProfileCreationForm
+
 from .models import Orders
 from FoodItems.models import FoodItem
 
-def create_order(request):
+def create_order(request,item_id):
     if request.method == "POST":
-        form=ProfileCreationForm(request.POST)
-       # print(form)
         item_id= request.POST.get('item_id')
         item = FoodItem.objects.get(pk=item_id)
-        if form.is_valid:
-            order=Orders()
-            order.user=request.user
-            order.item=item
-            order.order_placed_at=timezone.now()
-            order.save()
-            form.save()# updating the address and phone number
-
+        order=Orders()
+        order.user=request.user
+        order.item=item
+        order.order_placed_at=timezone.now()
+        order.save()
+           
     return redirect('orders:view_orders')
 
 def view_orders(request):
