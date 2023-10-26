@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
+
 from .models import Profile
 from .forms import CreateUserForm
 from users.forms import ProfileCreationForm
@@ -19,8 +19,25 @@ def sign_up(request):
     elif request.method == "GET":
         form = CreateUserForm()
         profileform = ProfileCreationForm(instance=request.user.profile)
-    return render(request, 'users/createacc.html', {'form': form,'profileform':profileform})
-    
+    return render(request, 'users/createacc.html', {'form': form,'profileform':profileform,'is_staff':False})
+
+def staff_signup(request):
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            profile= Profile()
+            profile.user=user
+            profile.role='staff'
+            profile.save()
+            return redirect('log_in')
+        
+    elif request.method == "GET":
+        form = CreateUserForm()
+    return render(request, 'users/createacc.html', {'form': form,'is_staff':True})
+
+
+
 def on_login(request):
     #profile=Profile.objects.filter(user=request.user).values().first()
     #print(request.user)
@@ -28,4 +45,4 @@ def on_login(request):
     if request.user.profile.role=='customer':
         return redirect('fooditems:home')
     else:
-        return redirect('orders:home')
+        return redirect('orders:view_orders')

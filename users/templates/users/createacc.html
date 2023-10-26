@@ -1,7 +1,7 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-
+    {% if not is_staff%}
     {{ profileform.non_field_errors }}
     <div class="form-group">
         {{ profileform.daddress.errors }}
@@ -13,7 +13,7 @@
         <label for="{{ form.phone.id_for_label }}">Mobile</label>
         {{ profileform.phone}}
     </div>
-
+    {% endif %}
 
     <div>
     <button type="submit">Sign Up</button>

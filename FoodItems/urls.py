@@ -11,7 +11,8 @@ app_name = 'fooditems'
 
 urlpatterns=[
     path('', views.home_page, name='home'), # type: ignore
-    path('addfooditem/', views.add_food_item, name='addfooditem'), 
+    path('addfooditem/', views.add_or_edit_food_item, name='addfooditem'), 
+    path('editfooditem/<int:item_id>/', views.add_or_edit_food_item, name='editfooditem'), 
     path('<int:item_id>/', views.view_item, name='viewitem'),
-    path('buyitem/<int:item_id>/', views.buy_item, name='buyitem')# type: ignore
+    #path('buyitem/<int:item_id>/', views.buy_item, name='buyitem')# type: ignore
 ]

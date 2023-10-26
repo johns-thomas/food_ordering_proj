@@ -4,32 +4,59 @@ Menu items
 {% endblock %}
 
 {% block content %}
-<section class="bg-dark text-light p-5">
+<section class="bg-dark text-light p-5 vh-100">
     <div class="container-fluid">
-        
-        <h3 class="card-title">{{ item.name }}</h3>
-    
-    <div class="card bg-dark text-light" style="width: 15rem;">
-        <img src="{{item.img.url}}" class="card-img-top" style="height:12vw; object-fit:cover;" alt="No image"/>
-        <div class="card-body">
-            
-            <p class="card-text">{{item.description}}</p>
-            <h4>&euro;{{item.price}}</h4>
-            <h3>{{item.ratings}}</h3>
-            <h3>&euro;{{item.discount}}%</h3>
-            <h3>Amount payable =&euro;{{item.get_selling_price}}%</h3>
-            {% if request.user.profile.is_customer %}
-            {% if is_buy %}
-            <a href="{% url 'orders:place_order' item_id=item.id %}" class="btn btn-info" role="button">Buy</a>
-            {% else %}
-            
-            {% endif %}
-            {% else %}
-            <a href="#link" class="btn btn-info" role="button">Edit item</a>
-            {% endif %}
-            
+        <div class="row">
+            <h3 class="card-title">{{ item.name }}</h3>
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8 d-flex align-items-end">
+                <img src="{{item.img.url}}" class="img-fluid mr-auto" alt="Image description">
+                <p class="p-2"> {{item.description}}</p>
+            </div>
+            <div class="col-4 col-md-4 d-flex justify-content-end align-items-top">
+                <p> <span style="font-size:36px; color:red">{{item.ratings }}</span>
+                    <i class="fa fa-star" style="font-size:36px; color:red"></i>
+                </p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-6">
+                <p class="text-muted" style="font-size:26px; color:rgb(218, 196, 196)"><del>&euro;{{item.price}}</del>
+                </p>
+                <h3>Deal<span class="badge badge-success">&euro;{{item.get_selling_price}}</span></h3>
+                <p>You save: <span class="badge badge-warning">&euro;{{item.discount}}</span></p>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-6 col-md-6">
+                {% if request.user.profile.is_customer %}
+                <h6>Delivery Location</h6>
+                <p id="delivery-location">{{request.user.profile.dadddress}}</p>
+                <span class="badge badge-warning">Cash on delivery only</span>
+                {% endif %}
+            </div>
+
+            <div class="col-6 col-md-6 d-flex justify-content-end align-items-end">
+                {% if request.user.profile.is_customer %}
+                {% if is_buy %}
+                <form method="post" action="{% url 'orders:place_order' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{item.id}}" />
+                    <button type="submit" class="save btn btn-primary" style="background-color: yellow;
+                color: black;">Confirm Order</button>
+                </form>
+                {% else %}
+
+                {% endif %}
+                {% else %}
+                <a href="{% url 'fooditems:editfooditem' item_id=item.id %}" class="btn btn-info" role="button">Edit
+                    item</a>
+                {% endif %}
+            </div>
+        </div>
 </section>
 {% endblock %}
