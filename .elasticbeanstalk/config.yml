@@ -1,0 +1,6 @@
+branch-defaults:
+  r1-2023:
+    environment: null
+    group_suffix: null
+global:
+  profile: null
