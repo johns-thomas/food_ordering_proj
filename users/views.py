@@ -6,6 +6,8 @@ from .forms import CreateUserForm
 from users.forms import ProfileCreationForm
 
 def sign_up(request):
+    form = None
+    profileform=None
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         pform = ProfileCreationForm(request.POST)
@@ -14,11 +16,11 @@ def sign_up(request):
             profile= pform.save(commit=False)
             profile.user=user
             profile.save()
-            return redirect('users:log_in')
+            return redirect('log_in')
         
     elif request.method == "GET":
         form = CreateUserForm()
-        profileform = ProfileCreationForm(instance=request.user.profile)
+        profileform = ProfileCreationForm()
     return render(request, 'users/createacc.html', {'form': form,'profileform':profileform,'is_staff':False})
 
 def staff_signup(request):

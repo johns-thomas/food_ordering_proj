@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'food_ordering_proj.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'devops',
+        'NAME': 'postgres',
         'USER':'postgres',
-        'PASSWORD':'Jesus@1998',
-        'HOST':'localhost',
+        'PASSWORD':'x22203389',
+        'HOST':'x22203389cpp.chwlezgyi7rm.eu-west-1.rds.amazonaws.com',
     }
 }
 
