@@ -21,6 +21,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmenu" aria-controls="navbarmenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+              {% if request.user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarmenu">
                 <ul class="navbar-nav me-auto">
                     {% if request.user.profile.is_customer %}
@@ -52,7 +53,7 @@
                       </ul>
                     </li>
                   </ul>
-            </div>
+            </div>{% endif %}
         </div>
     </nav>
 

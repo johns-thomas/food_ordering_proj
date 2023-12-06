@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "johns-thomas",
+        "projectKey": "johns-thomas_food-delivery-project"
+    }
+}

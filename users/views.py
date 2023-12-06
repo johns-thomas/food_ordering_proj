@@ -10,10 +10,10 @@ def sign_up(request):
     profileform=None
     if request.method == "POST":
         form = CreateUserForm(request.POST)
-        pform = ProfileCreationForm(request.POST)
-        if form.is_valid() and pform.is_valid():
+        profileform = ProfileCreationForm(request.POST)
+        if form.is_valid() and profileform.is_valid():
             user=form.save()
-            profile= pform.save(commit=False)
+            profile= profileform.save(commit=False)
             profile.user=user
             profile.save()
             return redirect('log_in')
