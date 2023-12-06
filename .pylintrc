@@ -1,2 +1,2 @@
-# Disable Import outside toplevel warning (C0415)
+[MASTER]
 disable=C0415
