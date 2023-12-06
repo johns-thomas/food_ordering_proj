@@ -13,6 +13,20 @@ phases:
       - python --version
       - pylint $CODEBUILD_SRC_DIR/*.py
       
+      - export SONAR_SCANNER_VERSION=5.0.1.3006
+      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      - export SONAR_SCANNER_OPTS="-server"
+
+  build:
+    commands:
+      - sonar-scanner -Dsonar.login=2b4ae59d223f5e3aec0757e1692f61b27acac729 -Dsonar.organization=johns-thomas -Dsonar.projectKey=johns-thomas_food-delivery-project -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
+      - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=johns-thomas_food-delivery-project >result.json
+      - cat result.json
+      - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
+
 artifacts:
   files:
     - '**/*'
